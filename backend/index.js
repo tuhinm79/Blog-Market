@@ -1,5 +1,4 @@
 const express = require("express");
-const app = express();
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const cors = require("cors");
@@ -11,10 +10,17 @@ const userRoute = require("./routes/users");
 const postRoute = require("./routes/posts");
 const commentRoute = require("./routes/comments");
 
+dotenv.config();
+
+const app = express();
+
 //database
 const connectDB = async () => {
   try {
-    await mongoose.connect(process.env.MONGO_URL);
+    await mongoose.connect(process.env.MONGO_URL, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
     console.log("database is connected successfully!");
   } catch (err) {
     console.log("error in bd");
@@ -23,8 +29,6 @@ const connectDB = async () => {
 };
 
 //middlewares
-dotenv.config();
-app.use(express.json());
 // app.use("/images",express.static(path.join(__dirname,"/images")))
 // app.use(
 //   cors({
@@ -40,9 +44,11 @@ const corsOptions = {
 
 // Apply CORS middleware
 app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));
 
 // Handle preflight requests for all routes
-app.options("*", cors(corsOptions));
+
+app.use(express.json());
 app.use(cookieParser());
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
