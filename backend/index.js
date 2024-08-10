@@ -61,6 +61,10 @@ app.use("/api/comments", commentRoute);
 app.use((req, res, next) => {
   res.status(404).json({ message: "Resource not found" });
 });
+app.get("/", (req, res) => {
+  // Example response
+  res.json("hello");
+});
 // //image upload
 // const storage=multer.diskStorage({
 //     destination:(req,file,fn)=>{
