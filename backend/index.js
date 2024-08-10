@@ -26,12 +26,23 @@ const connectDB = async () => {
 dotenv.config();
 app.use(express.json());
 // app.use("/images",express.static(path.join(__dirname,"/images")))
-app.use(
-  cors({
-    origin: ["http://localhost:5173", "https://blog-app-tuhin.vercel.app"],
-    credentials: true,
-  })
-);
+// app.use(
+//   cors({
+//     origin: ["http://localhost:5173", "https://blog-app-tuhin.vercel.app"],
+//     credentials: true,
+//   })
+// );
+// CORS configuration
+const corsOptions = {
+  origin: ["http://localhost:5173", "https://blog-app-tuhin.vercel.app"],
+  credentials: true,
+};
+
+// Apply CORS middleware
+app.use(cors(corsOptions));
+
+// Handle preflight requests for all routes
+app.options("*", cors(corsOptions));
 app.use(cookieParser());
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
