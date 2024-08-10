@@ -52,7 +52,11 @@ app.use(express.json());
 app.use(cookieParser());
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
-app.use("/api/posts", postRoute);
+// app.use("/api/posts", postRoute);
+app.get("/api/posts", (req, res) => {
+  // Example response
+  res.json({ message: "This is a list of posts" });
+});
 app.use("/api/comments", commentRoute);
 
 // //image upload
