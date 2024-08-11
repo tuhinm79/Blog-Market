@@ -52,15 +52,15 @@ app.use(express.json());
 app.use(cookieParser());
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
-// app.use("/api/posts", postRoute);
-app.get("/api/posts", (req, res) => {
-  // Example response
-  res.json({ message: "This is a list of posts" });
-});
+app.use("/api/posts", postRoute);
+// app.get("/api/posts", (req, res) => {
+//   // Example response
+//   res.json({ message: "This is a list of posts" });
+// });
 app.use("/api/comments", commentRoute);
-app.use((req, res, next) => {
-  res.status(404).json({ message: "Resource not found" });
-});
+// app.use((req, res, next) => {
+//   res.status(404).json({ message: "Resource not found" });
+// });
 app.get("/", (req, res) => {
   // Example response
   res.json("hello");
